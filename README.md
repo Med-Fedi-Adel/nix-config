@@ -1,1 +1,1 @@
-My declarative system configuration written in the Nix language that defines how a NixOS system or Nix environment should be set up, including installed packages, services, and system settings.
+My minimal declarative system configuration written in the Nix language that defines how a NixOS system or Nix environment should be set up, including installed packages, services, and system settings.
