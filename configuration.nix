@@ -1,25 +1,25 @@
 { config, lib, pkgs, ... }:
 
 {
-	imports =
-		[ 
-		./hardware-configuration.nix
-		];
+  imports =
+    [ 
+    ./hardware-configuration.nix
+    ];
 
-	boot.loader.systemd-boot.enable = true;
-	boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-	networking.hostName = "nixos-btw"; # Define your hostname.
+  networking.hostName = "nixos-btw"; # Define your hostname.
 
 # Configure network connections interactively with nmcli or nmtui.
-	networking.networkmanager.enable = true;
+    networking.networkmanager.enable = true;
 
-	time.timeZone = "Africa/Tunis";
+  time.timeZone = "Africa/Tunis";
 
   i18n.defaultLocale = "fr_FR.UTF-8";
 
   console.keyMap = "fr";
-  
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -30,16 +30,16 @@
 
 # Enable the X11 windowing system.
 # services.xserver.enable = true;
-	services.xserver = {
-	  xkb = {
-    layout = "fr";
-    variant = ""; # Leave empty for standard AZERTY, or use "latin9" etc.
-  };
+  services.xserver = {
+    xkb = {
+      layout = "fr";
+      variant = ""; # Leave empty for standard AZERTY, or use "latin9" etc.
+    };
     enable = true;
-		autoRepeatDelay = 200;
-		autoRepeatInterval = 35;
-	};
-	services.displayManager.sddm.enable = true;
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 35;
+  };
+  services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
 
@@ -63,27 +63,35 @@
 # services.libinput.enable = true;
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
-	users.users.z4un = {
-		isNormalUser = true;
-		extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-			packages = with pkgs; [
-			tree
-			];
-	};
+  users.users.z4un = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
 
-	programs.firefox.enable = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      packages = with pkgs; [
+      tree
+      ];
+  };
 
-	environment.systemPackages = with pkgs; [
-		vim 
-		wget
-		git
-		alacritty
-	];
+  programs.firefox.enable = true;
 
-	fonts.packages = with pkgs; [
-		nerd-fonts.jetbrains-mono ];
+  environment.systemPackages = with pkgs; [
+    vim 
+      wget
+      git
+  ];
+  
+  programs.zsh.enable = true;
+  environment.shells = with pkgs; [
+    bash
+      zsh
+  ];
 
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 
 
@@ -128,7 +136,7 @@
 # and migrated your data accordingly.
 #
 # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-	system.stateVersion = "26.05"; # Did you read the comment?
+  system.stateVersion = "26.05"; # Did you read the comment?
 
 }
 
