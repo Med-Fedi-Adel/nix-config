@@ -34,6 +34,11 @@ in
     syntaxHighlighting.enable = true;
   };
 
+  programs.yazi = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.starship = {
     enable = true;
 
@@ -166,6 +171,7 @@ in
       nodejs
       gcc
       rofi
+      lazygit
   ];
 }
 
