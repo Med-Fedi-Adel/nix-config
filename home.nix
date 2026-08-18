@@ -172,6 +172,7 @@ in
       gcc
       rofi
       lazygit
+      awscli2
   ];
 }
 
