@@ -15,6 +15,16 @@ in
   home.homeDirectory = "/home/z4un";
   home.stateVersion = "26.05";
 
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.zsh = {
     enable = true;
     shellAliases = {
