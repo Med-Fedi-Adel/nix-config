@@ -15,6 +15,10 @@ in
   home.homeDirectory = "/home/z4un";
   home.stateVersion = "26.05";
 
+  home.sessionPath = [
+    "$HOME/.cargo/bin"
+  ];
+
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -170,6 +174,7 @@ in
       nixpkgs-fmt
       nodejs
       gcc
+      rustup
       rofi
       lazygit
       awscli2
