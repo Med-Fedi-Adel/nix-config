@@ -11,6 +11,10 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")       -- center screen when looping search results
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- neotree
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<CR>")
+vim.keymap.set("n", "<leader>nf", "<cmd>Neotree focus<CR>")
+
 -- paste and don't replace clipboard over deleted text
 vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])

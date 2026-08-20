@@ -1,6 +1,8 @@
 return {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
+    "nvim-neo-tree/neo-tree.nvim",
+    "MunifTanjim/nui.nvim",
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-path",
@@ -14,4 +16,5 @@ return {
     "mbbill/undotree",
     "ojroques/vim-oscyank",
     "captbaritone/better-indent-support-for-php-with-html",
+    "lewis6991/gitsigns.nvim",
 }
