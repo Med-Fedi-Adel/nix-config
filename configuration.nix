@@ -79,8 +79,9 @@
     vim 
       wget
       git
+      gnumake
   ];
-  
+
   programs.zsh.enable = true;
   environment.shells = with pkgs; [
     bash
