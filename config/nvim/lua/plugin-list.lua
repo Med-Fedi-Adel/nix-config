@@ -2,7 +2,6 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
     "nvim-neo-tree/neo-tree.nvim",
-    "nvim-telescope/telescope.nvim",
     "MunifTanjim/nui.nvim",
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
