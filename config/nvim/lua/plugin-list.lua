@@ -18,4 +18,5 @@ return {
     "ojroques/vim-oscyank",
     "captbaritone/better-indent-support-for-php-with-html",
     "lewis6991/gitsigns.nvim",
+    "windwp/nvim-autopairs",
 }
