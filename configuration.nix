@@ -71,13 +71,15 @@
     isNormalUser = true;
     shell = pkgs.zsh;
 
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
       packages = with pkgs; [
       tree
       ];
   };
 
   programs.firefox.enable = true;
+
+  virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim 
@@ -98,7 +100,10 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+  };
 
 # Some programs need SUID wrappers, can be configured further or are
 # started in user sessions.
