@@ -105,6 +105,40 @@
     clock24 = true;
   };
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      glib          # libgobject-2.0, libglib-2.0, libgio-2.0
+        nss           # libnss3, libnssutil3, libsmime3
+        nspr          # libnspr4
+        atk           # libatk-1.0
+        at-spi2-atk   # libatk-bridge-2.0
+        at-spi2-core  # libatspi
+        cups.lib      # libcups
+        dbus          # libdbus-1
+        libdrm        # libdrm
+        gtk3          # libgtk-3
+        pango         # libpango-1.0
+        cairo         # libcairo
+        xorg.libX11         # libX11
+        xorg.libXcomposite  # libXcomposite
+        xorg.libXdamage     # libXdamage
+        xorg.libXext        # libXext
+        xorg.libXfixes      # libXfixes
+        xorg.libXrandr      # libXrandr
+        xorg.libxcb         # libxcb
+        mesa          # libgbm
+        expat         # libexpat
+        libxkbcommon  # libxkbcommon
+        alsa-lib      # libasound
+        ];
+  };
+
 # Some programs need SUID wrappers, can be configured further or are
 # started in user sessions.
 # programs.mtr.enable = true;
