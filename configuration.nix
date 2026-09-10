@@ -86,6 +86,7 @@
       wget
       git
       gnumake
+      steam-run
   ];
 
   programs.zsh.enable = true;
@@ -136,8 +137,11 @@
         expat         # libexpat
         libxkbcommon  # libxkbcommon
         alsa-lib      # libasound
+        libgbm
         ];
   };
+
+  nixpkgs.config.allowUnfree = true;
 
 # Some programs need SUID wrappers, can be configured further or are
 # started in user sessions.

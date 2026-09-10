@@ -179,6 +179,7 @@ in
       lazygit
       awscli2
       openssl
+      code-cursor
   ];
 }
 
