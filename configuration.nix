@@ -87,6 +87,7 @@
       git
       gnumake
       steam-run
+      dart
   ];
 
   programs.zsh.enable = true;
