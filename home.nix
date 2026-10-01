@@ -180,6 +180,7 @@ in
       awscli2
       openssl
       code-cursor
+      btop
   ];
 }
 
