@@ -1,57 +1,130 @@
 # nixos-dotfiles
 
-Declarative NixOS + Home Manager configuration.
+Declarative NixOS configuration with Home Manager, Plasma 6, Neovim, and dev tooling.
 
-## Quick start (new user / new machine)
+## Prerequisites
+
+- NixOS 26.05 (or compatible) with flakes enabled
+- Git
+- Sudo access
+- An internet connection for the first rebuild (downloads packages from cache.nixos.org)
+
+If flakes are not enabled yet, add to `/etc/nix/nix.conf`:
+
+```
+experimental-features = nix-command flakes
+```
+
+This repo enables the same setting in `modules/system/common.nix` once applied.
+
+---
+
+## Installation
+
+### 1. Clone the repository
 
 ```bash
 git clone <repo-url> ~/nixos-dotfiles
 cd ~/nixos-dotfiles
 chmod +x setup.sh rebuild.sh
+```
+
+The repo can live anywhere, but `~/nixos-dotfiles` is the conventional path.
+
+### 2. Configure your machine
+
+Run the interactive setup script. It asks for:
+
+- Linux username and hostname
+- Git name and email
+- Timezone, locale, and keyboard layout
+- NixOS `stateVersion`
+
+```bash
 ./setup.sh
+```
+
+This writes `settings.nix` (gitignored — your personal values stay local).
+
+On a **real NixOS machine**, setup also generates `hosts/HOSTNAME/hardware-configuration.nix` from your disks. On a non-NixOS system it writes a placeholder — replace that file before rebuilding on hardware:
+
+```bash
+sudo nixos-generate-config --show-hardware-config \
+  > hosts/YOUR_HOSTNAME/hardware-configuration.nix
+```
+
+### 3. Apply the configuration
+
+```bash
 ./rebuild.sh
+```
+
+`rebuild.sh` reads your hostname from `settings.nix` and passes it through `sudo` correctly (plain `sudo` drops environment variables and breaks the build).
+
+The first rebuild downloads packages and can take a while. Later rebuilds are much faster.
+
+### 4. Post-install (one-time)
+
+```bash
 passwd
-rustup default stable && rustup component add rust-analyzer
-```
-
-`setup.sh` writes gitignored `settings.nix`. Use `./rebuild.sh` to apply — it passes settings through sudo correctly.
-
-## Layout
-
-```
-settings.example.nix    # template (committed)
-settings.nix            # your values (generated, gitignored)
-setup.sh                # interactive setup
-hosts/
-  default.nix           # shared host config
-  HOSTNAME/
-    hardware-configuration.nix
-modules/system/         # desktop, dev, locale
-modules/home/           # shell, dev-tools, dotfiles
-home/default.nix        # home-manager entry
-config/                 # nvim, rofi dotfiles
-```
-
-## Day-to-day
-
-```bash
-cd ~/nixos-dotfiles
-sudo nixos-rebuild switch --flake .#$(nix eval --impure --expr 'import ./settings.nix' --apply 's: s.hostname' 2>/dev/null | tr -d '"')
-```
-
-Or use your hostname directly, e.g. `.#nixos-btw`.
-
-Neovim plugins install on first launch via `config/nvim/lua/manage.lua`.
-
-### Language tooling
-
-LSP servers in `modules/home/dev-tools.nix` match `config/nvim/plugin/lsp.lua`.
-After rebuild, install Rust LSP once:
-
-```bash
 rustup default stable
 rustup component add rust-analyzer rustfmt
 ```
 
-The custom **goon** treesitter parser is not in Nix — install `goon.so` manually under
-`~/.local/share/nvim/site/parser/` if you use that language.
+Open Neovim once so plugins are cloned automatically (`config/nvim/lua/manage.lua`).
+
+---
+
+## Day-to-day use
+
+After changing any file in this repo:
+
+```bash
+cd ~/nixos-dotfiles
+./rebuild.sh
+```
+
+To rebuild manually:
+
+```bash
+sudo env DOTFILES_SETTINGS="$PWD/settings.nix" \
+  nixos-rebuild switch --flake .#YOUR_HOSTNAME --impure
+```
+
+Replace `YOUR_HOSTNAME` with the value from `settings.nix` (e.g. `nixos-btw`).
+
+---
+
+## Language tooling
+
+Nix packages in `modules/home/dev-tools.nix` match the language servers in `config/nvim/plugin/lsp.lua`:
+
+| Language | Tool | Provided by |
+|----------|------|-------------|
+| Lua | lua-language-server | Nix |
+| Nix | nil, alejandra | Nix |
+| Rust | rust-analyzer, rustfmt | rustup |
+| Go | gopls | Nix |
+| C/C++ | clangd | Nix (clang-tools) |
+| TypeScript/JS | typescript-language-server | Nix |
+| PHP | intelephense, php-cs-fixer | Nix |
+| CSS/JSON | vscode-langservers-extracted | Nix |
+| Zig | zls | Nix |
+
+The custom **goon** treesitter parser is not packaged in Nix. If you use it, install `goon.so` manually under `~/.local/share/nvim/site/parser/`.
+
+---
+
+## Troubleshooting
+
+**`flake does not provide attribute nixosConfigurations.HOSTNAME`**
+Run `./setup.sh` and confirm `settings.nix` exists. Always use `./rebuild.sh` instead of bare `sudo nixos-rebuild`.
+
+**Home Manager corrupted `config/nvim` into symlinks**
+Do not set `recursive = true` in dotfiles config. Restore with `git checkout -- config/nvim` and rebuild.
+
+**`rust-analyzer` / `cargo-fmt` path conflicts**
+Rust tools come from `rustup`, not Nix. Do not add `rust-analyzer` or `rustfmt` to `dev-tools.nix`.
+
+**Disk/boot errors on new hardware**
+Regenerate `hosts/HOSTNAME/hardware-configuration.nix` with `nixos-generate-config`.
