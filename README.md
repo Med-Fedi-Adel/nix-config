@@ -29,7 +29,7 @@ hosts/
 modules/system/         # desktop, dev, locale
 modules/home/           # shell, dev-tools, dotfiles
 home/default.nix        # home-manager entry
-config/                 # nvim, rofi, alacritty dotfiles
+config/                 # nvim, rofi dotfiles
 ```
 
 ## Day-to-day

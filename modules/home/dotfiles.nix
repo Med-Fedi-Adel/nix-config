@@ -5,7 +5,6 @@ let
   configs = {
     nvim = "nvim";
     rofi = "rofi";
-    alacritty = "alacritty";
   };
 in
 {
