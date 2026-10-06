@@ -1,3 +1,5 @@
 result
 *.backup
 settings.nix
+__pycache__/
+*.pyc
