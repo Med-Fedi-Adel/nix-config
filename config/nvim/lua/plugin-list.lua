@@ -18,4 +18,7 @@ return {
     "captbaritone/better-indent-support-for-php-with-html",
     "lewis6991/gitsigns.nvim",
     "windwp/nvim-autopairs",
+    "mfussenegger/nvim-dap",
+    "nvim-neotest/nvim-nio",
+    "rcarriga/nvim-dap-ui"
 }

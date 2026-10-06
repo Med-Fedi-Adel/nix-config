@@ -169,6 +169,7 @@ in
 
   home.packages = with pkgs; [
     neovim
+      lldb
       ripgrep
       nil
       nixpkgs-fmt
