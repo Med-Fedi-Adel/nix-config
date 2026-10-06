@@ -1,20 +1,6 @@
-{ config, pkgs, ... }: 
-
-let 
-dotfiles = "${config.home.homeDirectory}/nixos-dotfiles/config";
-create_symlink = path: config.lib.file.mkOutOfStoreSymlink path; 
-configs = {
-  qtile = "qtile"; 
-  nvim = "nvim";
-  rofi = "rofi";
-};
-in
+{ ... }:
 
 {
-  home.username = "z4un"; 
-  home.homeDirectory = "/home/z4un";
-  home.stateVersion = "26.05";
-
   home.sessionPath = [
     "$HOME/.cargo/bin"
   ];
@@ -117,13 +103,8 @@ in
         format = "took [$duration](bold yellow) ";
       };
 
-      username = {
-        disabled = true;
-      };
-
-      hostname = {
-        disabled = true;
-      };
+      username.disabled = true;
+      hostname.disabled = true;
     };
   };
 
@@ -133,20 +114,14 @@ in
 
     settings = {
       theme = "Catppuccin Mocha";
-
       font-family = "JetBrainsMono Nerd Font";
       font-size = 13;
-
       background-opacity = 0.94;
-
       window-padding-x = 12;
       window-padding-y = 10;
-
       cursor-style = "bar";
       cursor-style-blink = true;
-
       confirm-close-surface = false;
-
       shell-integration-features = "cursor,sudo,title";
     };
   };
@@ -155,33 +130,6 @@ in
     enable = true;
     userName = "Med-Fedi-Adel";
     userEmail = "mohamedfedi.adel@insat.ucar.tn";
-    extraConfig = {
-      init.defaultBranch = "main";
-    };
+    extraConfig.init.defaultBranch = "main";
   };
-
-  xdg.configFile = builtins.mapAttrs
-    (name: subpath: {
-     source = create_symlink "${dotfiles}/${subpath}";
-     recursive = true;
-     })
-  configs;
-
-  home.packages = with pkgs; [
-    neovim
-      lldb
-      ripgrep
-      nil
-      nixpkgs-fmt
-      nodejs
-      gcc
-      rustup
-      rofi
-      lazygit
-      awscli2
-      openssl
-      code-cursor
-      btop
-  ];
 }
-
