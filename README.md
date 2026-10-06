@@ -95,26 +95,6 @@ Replace `YOUR_HOSTNAME` with the value from `settings.nix` (e.g. `nixos-btw`).
 
 ---
 
-## Language tooling
-
-Nix packages in `modules/home/dev-tools.nix` match the language servers in `config/nvim/plugin/lsp.lua`:
-
-| Language | Tool | Provided by |
-|----------|------|-------------|
-| Lua | lua-language-server | Nix |
-| Nix | nil, alejandra | Nix |
-| Rust | rust-analyzer, rustfmt | rustup |
-| Go | gopls | Nix |
-| C/C++ | clangd | Nix (clang-tools) |
-| TypeScript/JS | typescript-language-server | Nix |
-| PHP | intelephense, php-cs-fixer | Nix |
-| CSS/JSON | vscode-langservers-extracted | Nix |
-| Zig | zls | Nix |
-
-The custom **goon** treesitter parser is not packaged in Nix. If you use it, install `goon.so` manually under `~/.local/share/nvim/site/parser/`.
-
----
-
 ## Troubleshooting
 
 **`flake does not provide attribute nixosConfigurations.HOSTNAME`**
