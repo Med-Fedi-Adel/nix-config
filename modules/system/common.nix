@@ -1,15 +1,15 @@
-{ pkgs, ... }:
+{ settings, pkgs, ... }:
 
 {
-  time.timeZone = "Africa/Tunis";
+  time.timeZone = settings.timeZone;
 
-  i18n.defaultLocale = "fr_FR.UTF-8";
-  console.keyMap = "fr";
+  i18n.defaultLocale = settings.locale;
+  console.keyMap = settings.keyboardLayout;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "26.05";
+  system.stateVersion = settings.stateVersion;
 
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ bash zsh ];

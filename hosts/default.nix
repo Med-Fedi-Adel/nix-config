@@ -1,19 +1,18 @@
-{ pkgs, ... }:
+{ settings, pkgs, ... }:
 
 {
   imports = [
-    ./hardware-configuration.nix
-    ../../modules/system/common.nix
-    ../../modules/system/desktop.nix
-    ../../modules/system/dev.nix
+    ../modules/system/common.nix
+    ../modules/system/desktop.nix
+    ../modules/system/dev.nix
   ];
 
-  networking.hostName = "nixos-btw";
+  networking.hostName = settings.hostname;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  users.users.z4un = {
+  users.users.${settings.username} = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "docker" ];

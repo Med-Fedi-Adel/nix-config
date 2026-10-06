@@ -12,12 +12,25 @@
   outputs = { self, nixpkgs, home-manager, ... }:
   let
     system = "x86_64-linux";
-    specialArgs = { dotfiles = "${self}/config"; };
+
+    settingsFile =
+      let fromEnv = builtins.getEnv "DOTFILES_SETTINGS";
+      in if fromEnv != "" then fromEnv
+        else if builtins.pathExists ./settings.nix then ./settings.nix
+        else ./settings.example.nix;
+
+    settings = import settingsFile;
+
+    specialArgs = {
+      dotfiles = "${self}/config";
+      inherit settings;
+    };
 
     mkHost = hostname: nixpkgs.lib.nixosSystem {
       inherit system specialArgs;
       modules = [
-        ./hosts/${hostname}/default.nix
+        ./hosts/default.nix
+        ./hosts/${hostname}/hardware-configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -25,12 +38,12 @@
             useUserPackages = true;
             backupFileExtension = "backup";
             extraSpecialArgs = specialArgs;
-            users.z4un = import ./home/z4un/default.nix;
+            users.${settings.username} = import ./home/default.nix;
           };
         }
       ];
     };
   in {
-    nixosConfigurations.nixos-btw = mkHost "nixos-btw";
+    nixosConfigurations.${settings.hostname} = mkHost settings.hostname;
   };
 }

@@ -2,40 +2,43 @@
 
 Declarative NixOS + Home Manager configuration.
 
+## Quick start (new user / new machine)
+
+```bash
+git clone <repo-url> ~/nixos-dotfiles
+cd ~/nixos-dotfiles
+chmod +x setup.sh rebuild.sh
+./setup.sh
+./rebuild.sh
+passwd
+rustup default stable && rustup component add rust-analyzer
+```
+
+`setup.sh` writes gitignored `settings.nix`. Use `./rebuild.sh` to apply — it passes settings through sudo correctly.
+
 ## Layout
 
 ```
-hosts/nixos-btw/          # per-machine config + hardware
-modules/system/           # shared system modules (desktop, dev, common)
-modules/home/             # shared home modules (shell, dev-tools, dotfiles)
-home/z4un/                # user-specific home config
-config/                   # application dotfiles (nvim, rofi, alacritty)
-```
-
-## Fresh install
-
-```bash
-# 1. Clone anywhere (path is resolved via flake, not hardcoded)
-git clone <repo-url> ~/nixos-dotfiles
-cd ~/nixos-dotfiles
-
-# 2. On new hardware, regenerate disk config
-sudo nixos-generate-config --show-hardware-config > hosts/nixos-btw/hardware-configuration.nix
-
-# 3. Rebuild
-sudo nixos-rebuild switch --flake .#nixos-btw
-
-# 4. Post-install (one-time)
-passwd
-rustup default stable
-rustup component add rust-analyzer
+settings.example.nix    # template (committed)
+settings.nix            # your values (generated, gitignored)
+setup.sh                # interactive setup
+hosts/
+  default.nix           # shared host config
+  HOSTNAME/
+    hardware-configuration.nix
+modules/system/         # desktop, dev, locale
+modules/home/           # shell, dev-tools, dotfiles
+home/default.nix        # home-manager entry
+config/                 # nvim, rofi, alacritty dotfiles
 ```
 
 ## Day-to-day
 
 ```bash
 cd ~/nixos-dotfiles
-sudo nixos-rebuild switch --flake .#nixos-btw
+sudo nixos-rebuild switch --flake .#$(nix eval --impure --expr 'import ./settings.nix' --apply 's: s.hostname' 2>/dev/null | tr -d '"')
 ```
 
-Neovim plugins are installed on first launch via `config/nvim/lua/manage.lua`.
+Or use your hostname directly, e.g. `.#nixos-btw`.
+
+Neovim plugins install on first launch via `config/nvim/lua/manage.lua`.

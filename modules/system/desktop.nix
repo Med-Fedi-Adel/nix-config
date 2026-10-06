@@ -1,4 +1,4 @@
-{ ... }:
+{ settings, ... }:
 
 {
   networking.networkmanager.enable = true;
@@ -16,7 +16,7 @@
     autoRepeatDelay = 200;
     autoRepeatInterval = 35;
     xkb = {
-      layout = "fr";
+      layout = settings.keyboardLayout;
       variant = "";
     };
   };

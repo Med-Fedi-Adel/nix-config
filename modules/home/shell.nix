@@ -1,4 +1,4 @@
-{ ... }:
+{ settings, ... }:
 
 {
   home.sessionPath = [
@@ -128,8 +128,8 @@
 
   programs.git = {
     enable = true;
-    userName = "Med-Fedi-Adel";
-    userEmail = "mohamedfedi.adel@insat.ucar.tn";
+    userName = settings.gitName;
+    userEmail = settings.gitEmail;
     extraConfig.init.defaultBranch = "main";
   };
 }
