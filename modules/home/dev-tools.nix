@@ -22,7 +22,7 @@
     # debugging
     lldb
 
-    # language servers (used by config/nvim/plugin/lsp.lua)
+    # language servers (see config/nvim/plugin/lsp.lua)
     lua-language-server
     clang-tools
     gopls
@@ -30,6 +30,10 @@
     typescript-language-server
     vscode-langservers-extracted
     intelephense
+
+    # formatters / fixers used by editor keybinds or LSP
+    phpPackages.php-cs-fixer
+
     awscli2
   ];
 }

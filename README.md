@@ -42,3 +42,16 @@ sudo nixos-rebuild switch --flake .#$(nix eval --impure --expr 'import ./setting
 Or use your hostname directly, e.g. `.#nixos-btw`.
 
 Neovim plugins install on first launch via `config/nvim/lua/manage.lua`.
+
+### Language tooling
+
+LSP servers in `modules/home/dev-tools.nix` match `config/nvim/plugin/lsp.lua`.
+After rebuild, install Rust LSP once:
+
+```bash
+rustup default stable
+rustup component add rust-analyzer rustfmt
+```
+
+The custom **goon** treesitter parser is not in Nix — install `goon.so` manually under
+`~/.local/share/nvim/site/parser/` if you use that language.
