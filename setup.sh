@@ -6,6 +6,21 @@ SETTINGS="$ROOT/settings.nix"
 EXAMPLE="$ROOT/settings.example.nix"
 
 bold() { printf '\033[1m%s\033[0m\n' "$*"; }
+
+show_welcome() {
+  local banner="$ROOT/assets/obito-banner.txt"
+  echo
+  if [[ -f "$banner" ]]; then
+    cat "$banner"
+  else
+    echo "  [banner missing: $banner]"
+  fi
+  echo
+  echo "  minimal os config — trust me bro"
+  echo
+  echo "Press Enter to keep the value shown in brackets."
+  echo
+}
 prompt() {
   local var="$1" label="$2" default="$3" value
   read -r -p "$(printf '%s [%s]: ' "$label" "$default")" value
@@ -22,9 +37,7 @@ load_default() {
   fi
 }
 
-bold "NixOS dotfiles setup"
-echo "Press Enter to keep the value shown in brackets."
-echo
+show_welcome
 
 DEFAULT_USER="$(load_default ".username" "${USER:-yourusername}")"
 DEFAULT_HOST="$(load_default ".hostname" "nixos")"
