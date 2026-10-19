@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # editor & shell tools
     neovim
@@ -35,5 +33,8 @@
     phpPackages.php-cs-fixer
 
     awscli2
+
+    # browsers
+    google-chrome
   ];
 }
