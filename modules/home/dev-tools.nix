@@ -33,6 +33,7 @@
     phpPackages.php-cs-fixer
 
     awscli2
+    obs-studio
 
     # browsers
     google-chrome
