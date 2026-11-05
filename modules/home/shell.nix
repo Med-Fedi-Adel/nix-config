@@ -1,6 +1,4 @@
-{ settings, ... }:
-
-{
+{settings, ...}: {
   home.sessionPath = [
     "$HOME/.cargo/bin"
   ];
@@ -38,7 +36,7 @@
       format = ''
         ╭─ $directory$git_branch$git_status$nix_shell$python$nodejs$rust
         ╰─$character
-        '';
+      '';
 
       directory = {
         style = "bold blue";
@@ -128,8 +126,14 @@
 
   programs.git = {
     enable = true;
-    userName = settings.gitName;
-    userEmail = settings.gitEmail;
-    extraConfig.init.defaultBranch = "main";
+
+    settings = {
+      user = {
+        name = settings.gitName;
+        email = settings.gitEmail;
+      };
+
+      init.defaultBranch = "main";
+    };
   };
 }

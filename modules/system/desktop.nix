@@ -1,6 +1,4 @@
-{ settings, ... }:
-
-{
+{settings, ...}: {
   networking.networkmanager.enable = true;
 
   services.pipewire = {
@@ -26,7 +24,7 @@
 
   systemd.oomd = {
     enable = true;
-    enableUserServices = true;
+    enableUserSlices = true;
   };
 
   programs.firefox.enable = true;
