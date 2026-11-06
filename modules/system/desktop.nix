@@ -1,5 +1,6 @@
 {settings, ...}: {
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
 
   services.pipewire = {
     enable = true;
